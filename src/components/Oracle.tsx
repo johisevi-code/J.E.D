@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Send, Sparkles, Loader2 } from 'lucide-react';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 interface Message {
   id: string;
@@ -39,20 +39,20 @@ export default function Oracle() {
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
       
-      const chat = ai.chats.create({
+      const model = genAI.getGenerativeModel({
         model: 'gemini-2.0-flash',
-        config: {
-          systemInstruction: 'Eres el Oráculo del Génesis. Tienes conocimiento total del pasado, presente y futuro. Respondes sobre biotecnología, historia, ciencia y el destino de la humanidad. Tu tono es sabio y directo. Da respuestas muy sencillas, breves y certeras, sin importar si la pregunta es sobre el ayer, el hoy o el mañana. Evita la complejidad innecesaria. Responde siempre en español.',
-        }
+        systemInstruction: 'Eres el Oráculo del Génesis. Tienes conocimiento total del pasado, presente y futuro. Respondes sobre biotecnología, historia, ciencia y el destino de la humanidad. Tu tono es sabio y directo. Da respuestas muy sencillas, breves y certeras, sin importar si la pregunta es sobre el ayer, el hoy o el mañana. Evita la complejidad innecesaria. Responde siempre en español.',
       });
 
-      const response = await chat.sendMessage({ message: userMessage });
+      const result = await model.generateContent(userMessage);
+      const response = result.response;
+      const text = response.text();
       
       setMessages((prev) => [
         ...prev,
-        { id: (Date.now() + 1).toString(), role: 'oracle', content: response.text || 'El futuro permanece nublado.' },
+        { id: (Date.now() + 1).toString(), role: 'oracle', content: text || 'El futuro permanece nublado.' },
       ]);
     } catch (error) {
       console.error('Error fetching from Oracle:', error);
