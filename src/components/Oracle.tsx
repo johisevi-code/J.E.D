@@ -41,8 +41,12 @@ export default function Oracle() {
     setIsLoading(true);
 
     try {
+      console.log('[v0] API Key present:', !!process.env.GEMINI_API_KEY);
+      console.log('[v0] API Key value:', process.env.GEMINI_API_KEY?.substring(0, 10) + '...');
+      
       const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
       
+      console.log('[v0] Sending request to Gemini...');
       const response = await ai.models.generateContent({
         model: 'gemini-2.0-flash',
         contents: userMessage,
@@ -51,7 +55,9 @@ export default function Oracle() {
         },
       });
 
+      console.log('[v0] Response received:', response);
       const text = response.text || 'El futuro permanece nublado.';
+      console.log('[v0] Text extracted:', text);
       
       setMessages((prev) => [
         ...prev,
