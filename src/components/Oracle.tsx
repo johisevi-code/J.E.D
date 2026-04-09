@@ -42,7 +42,7 @@ export default function Oracle() {
       const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
       
       const chat = ai.chats.create({
-        model: 'gemini-3.1-pro-preview',
+        model: 'gemini-2.0-flash',
         config: {
           systemInstruction: 'Eres el Oráculo del Génesis. Tienes conocimiento total del pasado, presente y futuro. Respondes sobre biotecnología, historia, ciencia y el destino de la humanidad. Tu tono es sabio y directo. Da respuestas muy sencillas, breves y certeras, sin importar si la pregunta es sobre el ayer, el hoy o el mañana. Evita la complejidad innecesaria. Responde siempre en español.',
         }
