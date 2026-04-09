@@ -41,7 +41,6 @@ export default function Oracle() {
     setIsLoading(true);
 
     try {
-      console.log('[v0] Initializing GoogleGenAI with API key');
       const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
       
       const response = await ai.models.generateContent({
