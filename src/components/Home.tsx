@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, Sparkles, BrainCircuit } from 'lucide-react';
 
 interface HomeProps {
   setCurrentTab: (tab: string) => void;
@@ -30,14 +30,16 @@ export default function Home({ setCurrentTab }: HomeProps) {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <button 
             onClick={() => setCurrentTab('oracle')}
-            className="glass-panel px-8 py-4 rounded-full font-mono text-sm tracking-widest uppercase hover:bg-[rgba(0,240,255,0.1)] transition-colors border-[#00f0ff] text-[#00f0ff]"
+            className="glass-panel px-8 py-4 rounded-full font-mono text-sm tracking-widest uppercase hover:bg-[rgba(0,240,255,0.1)] transition-all border-[#00f0ff] text-[#00f0ff] flex items-center gap-3 group shadow-[0_0_20px_rgba(0,240,255,0.1)] hover:shadow-[0_0_30px_rgba(0,240,255,0.3)]"
           >
+            <Sparkles size={18} className="group-hover:rotate-12 transition-transform" />
             Iniciar Secuencia
           </button>
           <button 
             onClick={() => setCurrentTab('truths')}
-            className="px-8 py-4 rounded-full font-mono text-sm tracking-widest uppercase text-gray-400 hover:text-white transition-colors"
+            className="px-8 py-4 rounded-full font-mono text-sm tracking-widest uppercase text-gray-400 hover:text-white transition-all flex items-center gap-3 group"
           >
+            <BrainCircuit size={18} className="group-hover:scale-110 transition-transform" />
             Leer el Manifiesto
           </button>
         </div>
