@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "public": true,
+  "cleanUrls": true,
+  "outputDirectory": "9"
+}
+# Ejemplo de comando para asegurar que la carpeta existe
+mkdir -p n9 && cp -r public/* n9/
