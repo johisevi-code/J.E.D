@@ -1,0 +1,41 @@
+{
+  "app_name": "ASI El Génesis",
+  "version": "1.0.0",
+  "config_n9": {
+    "status": "active",
+    "directory": "res/n9",
+    "github_integration": true,
+    "api_endpoint": "https://api.github.com/repos/tu-usuario/J.E.D."
+  },
+  "firebase_services": {
+    "project_id": "tu-proyecto-id",
+    "storage_bucket": "tu-proyecto.appspot.com"
+  }
+}
+fun loadJSONFromN9(context: Context): String? {
+    return try {
+        // Abre el archivo desde la ruta específica
+        val inputStream = context.assets.open("n9/config.json")
+        val size = inputStream.available()
+        val buffer = ByteArray(size)
+        inputStream.read(buffer)
+        inputStream.close()
+        String(buffer, Charsets.UTF_8)
+    } catch (ex: IOException) {
+        ex.printStackTrace()
+        null // Aquí es donde la app se pone en blanco si no encuentra el archivo
+    }
+}
+# Crear la carpeta n9 si no existe
+mkdir -p app/src/main/assets/n9
+
+# Crear el archivo json con contenido base
+cat <<EOF > app/src/main/assets/n9/config.json
+{
+  "id": "cosmos_asi_init",
+  "folder": "n9",
+  "required": true
+}
+EOF
+
+echo "Archivo JSON añadido correctamente a la carpeta n9"
