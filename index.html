@@ -1,13 +1,35 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N9 IA System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        <header>
+            <h1>IA Verificada</h1>
+            <div id="status-dot"></div>
+        </header>
 
+        <div id="chat-box">
+            <div id="messages"></div>
+            <div class="input-group">
+                <input type="text" id="user-input" placeholder="Pregunta a tu IA de GitHub...">
+                <button onclick="sendMessage()">Enviar</button>
+            </div>
+        </div>
+
+        <button id="btn-n9" onclick="irAEnlace()">Abrir Enlace Verificado</button>
+    </div>
+
+    <script src="ia_logic.js"></script>
+    <script>
+        function irAEnlace() {
+            // Abrimos en una pestaña nueva para evitar el Error 403 de Google
+            window.open("https://n9.cl/0htkn", "_blank");
+        }
+    </script>
+</body>
+</html>
