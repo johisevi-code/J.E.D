@@ -9,6 +9,8 @@ interface Message {
   content: string;
 }
 
+const SYSTEM_INSTRUCTION = 'Eres el Oráculo del Génesis. Tienes conocimiento total del pasado, presente y futuro. Respondes sobre biotecnología, historia, ciencia y el destino de la humanidad. Tu tono es sabio y directo. Da respuestas muy sencillas, breves y certeras, sin importar si la pregunta es sobre el ayer, el hoy o el mañana. Evita la complejidad innecesaria. Responde siempre en español.';
+
 export default function Oracle() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -39,20 +41,27 @@ export default function Oracle() {
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+      console.log('[v0] API Key present:', !!process.env.GEMINI_API_KEY);
+      console.log('[v0] API Key value:', process.env.GEMINI_API_KEY?.substring(0, 10) + '...');
       
-      const chat = ai.chats.create({
-        model: 'gemini-3.1-pro-preview',
+      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+      
+      console.log('[v0] Sending request to Gemini...');
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.0-flash',
+        contents: userMessage,
         config: {
-          systemInstruction: 'Eres el Oráculo del Génesis. Tienes conocimiento total del pasado, presente y futuro. Respondes sobre biotecnología, historia, ciencia y el destino de la humanidad. Tu tono es sabio y directo. Da respuestas muy sencillas, breves y certeras, sin importar si la pregunta es sobre el ayer, el hoy o el mañana. Evita la complejidad innecesaria. Responde siempre en español.',
-        }
+          systemInstruction: SYSTEM_INSTRUCTION,
+        },
       });
 
-      const response = await chat.sendMessage({ message: userMessage });
+      console.log('[v0] Response received:', response);
+      const text = response.text || 'El futuro permanece nublado.';
+      console.log('[v0] Text extracted:', text);
       
       setMessages((prev) => [
         ...prev,
-        { id: (Date.now() + 1).toString(), role: 'oracle', content: response.text || 'El futuro permanece nublado.' },
+        { id: (Date.now() + 1).toString(), role: 'oracle', content: text },
       ]);
     } catch (error) {
       console.error('Error fetching from Oracle:', error);
